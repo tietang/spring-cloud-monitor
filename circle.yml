@@ -1,0 +1,10 @@
+
+dependencies:
+  pre:
+    - go get github.com/ArthurHlt/gominlog
+    - go get github.com/tietang/go-utils
+    - go get github.com/sirupsen/logrus
+    - go get gopkg.in/yaml.v2
+    - go get github.com/tietang/props
+    - go get github.com/smartystreets/goconvey/convey
+    - go get -u github.com/tietang/go-eureka-client/eureka/config
