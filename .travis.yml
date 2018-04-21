@@ -13,7 +13,7 @@ branches:
 #  on_failure: always
 
 install:
-  - go get -u
+#  - go get -u
 
 
 script:
