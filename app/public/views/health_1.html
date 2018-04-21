@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+{{/*<meta http-equiv="refresh" content="5"/>*/}}
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <link rel="alternate icon" type="image/png" href="/i/favicon.png">
+    <title>微服务状态监控</title>
+
+    <style type="text/css">
+        * {
+            /*background-color: #000000;*/
+
+            /*-webkit-transform: scale(0.84, 0.84);*/
+
+            *font-size: 9px;
+
+        }
+
+        body {
+            background-color: #AAAAAA;
+        }
+
+        .font-9px {
+            transform: scale(0.5);
+            font-size: 18px;
+        }
+
+        .service {
+            background-color: #FFFFFF;
+            float: left;
+            width: 255px;
+            margin: 8px;
+            height: auto;
+            list-style: none;
+            height: auto;
+            /*border-radius: 5px 5px 0px 0px;*/
+            padding: 0px;
+
+            border-bottom: solid 0px #AAAAAA;
+        }
+
+        .grid {
+            padding: 0px;
+            padding-bottom: 5px;
+            box-shadow: 1px 0px 6px 0px rgba(0, 0, 0, 1);
+        }
+
+        .title {
+
+            font-size: 9px;
+            padding: 0px 0px 0px 10px;
+            text-align: left;
+            height: 22px;
+            line-height: 22px;
+            margin-top: 0px;
+            /*margin-bottom: 2px;*/
+            font-weight: bold;
+            display: block;
+            /*border-bottom: 1px solid #E4E4E4;*/
+            /*border-radius: 5px 5px 0px 0px;*/
+            /*box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.9);*/
+        }
+
+        .boxes .box {
+            color: #000000;
+            font-weight: bold;
+            height: 20px;
+            clear: none;
+            line-height: 20px;
+            width: 120px;
+            /*padding-left: 5px;*/
+            margin-left: 5px;
+            margin-top: 5px;
+            /*margin-bottom: 1px;*/
+            display: inline;
+            text-align: left;
+            float: left;
+        }
+
+        .boxes .in_box {
+            width: 40px;
+            height: 20px;
+            line-height: 20px;
+            float: left;
+            text-align: center;
+        }
+
+        .boxes .host {
+            display: inline;
+            position: relative;
+            height: 20px;
+            width: 200px;
+            top: -20px;
+            font-size: 9px;
+            /*color: #000000;*/
+            /*background-color: #FFFFFF;*/
+            /*opacity: 0.5;*/
+            text-align: left;
+        }
+
+        .boxes .host a {
+            text-decoration: none;
+            text-decoration-color: #000000;
+        }
+
+        .boxes .host a {
+            text-decoration: none;
+            color: #FFFFFF;
+        }
+
+        .box_title .in_box {
+            width: 20px;
+            height: 20px;
+            line-height: 20px;
+            display: block;
+            float: left;
+        }
+
+        .box_title .host {
+            display: inline;
+            position: relative;
+            height: 20px;
+            top: -20px;
+            transform: scale(0.5);
+            font-size: 9px;
+            color: #000000;
+            background-color: #FFFFFF;
+            opacity: 0.5;
+            text-align: left;
+        }
+
+        /*.c-0{		background-color:#CC0000;color: #FFFFFF;}*/
+        /*.c-1{		background-color:#CC2200;color: #FFFFFF;}*/
+        /*.c-2{		background-color:#CC4400;color: #FFFFFF;}*/
+        /*.c-3{		background-color:#BB6600;color: #FFFFFF;}*/
+        /*.c-4{		background-color:#AA8800;color: #FFFFFF;}*/
+        /*.c-5{		background-color:#999900;color: #FFFFFF;}*/
+        /*.c-6{		background-color:#88AA00;color: #FFFFFF;}*/
+        /*.c-7{		background-color:#66BB00;color: #FFFFFF;}*/
+        /*.c-8{		background-color:#44CC00;color: #FFFFFF;}*/
+        /*.c-9{		background-color:#22CC00;color: #FFFFFF;}*/
+        /*.c-10{		background-color:#00CC00;color: #FFFFFF;}*/
+        .c--1 {
+            background-color: #DDDDDD;
+            color: #AAAAAA;
+        }
+
+        .c-0 {
+            background-color: #AA0000;
+            color: #FFFFFF;
+        }
+
+        .c-1 {
+            background-color: #AA2200;
+            color: #FFFFFF;
+        }
+
+        .c-2 {
+            background-color: #AA4400;
+            color: #FFFFFF;
+        }
+
+        .c-3 {
+            background-color: #AA6600;
+            color: #FFFFFF;
+        }
+
+        .c-4 {
+            background-color: #AA8800;
+            color: #FFFFFF;
+        }
+
+        .c-5 {
+            background-color: #999900;
+            color: #FFFFFF;
+        }
+
+        .c-6 {
+            background-color: #88AA00;
+            color: #FFFFFF;
+        }
+
+        .c-7 {
+            background-color: #66AA00;
+            color: #FFFFFF;
+        }
+
+        .c-8 {
+            background-color: #44AA00;
+            color: #FFFFFF;
+        }
+
+        .c-9 {
+            background-color: #22AA00;
+            color: #FFFFFF;
+        }
+
+        .c-10 {
+            background-color: #00AA10;
+            color: #FFFFFF;
+        }
+
+        .c-
+
+
+    </style>
+</head>
+<body>
+<div id="container">
+{{ range $k,$v := .services}}
+    <div class=" service grid">
+        <div class=" title c-{{$v.Health1m}}">{{$k}}</div>
+        <div class="boxes">
+        {{ range $k1,$v1:= $v.Instances}}
+            <div class="box">
+                <div class="c-{{$v1.Health1m}} in_box"></div>
+                <div class="c-{{$v1.Health5m}} in_box"></div>
+                <div class="c-{{$v1.Health15m}} in_box"></div>
+                <div class="host"><a href="{{$v1.HealthCheckUrl}}" target="_blank">{{$v1.Name}}</a></div>
+            </div>
+        {{end}}
+        </div>
+
+
+    </div>
+{{end}}
+</div>
+<div class="service grid">
+
+    <div class="am-u-sm-2 ">
+        <div class=" title c-3">色彩示例</div>
+        <ul class="boxes">
+            <li class="box">
+                <div class=" c-0">127.0.0.1:8080</div>
+            </li>
+            <li class="box">
+                <div class=" c-1">127.0.0.1:8080</div>
+            </li>
+            <li class="box">
+                <div class=" c-2">127.0.0.1:8080</div>
+            </li>
+            <li class="box">
+                <div class=" c-3">127.0.0.1:8080</div>
+            </li>
+            <li class="box">
+                <div class=" c-4">127.0.0.1:8080</div>
+            </li>
+            <li class="box">
+                <div class=" c-5">127.0.0.1:8080</div>
+            </li>
+            <li class="box">
+                <div class=" c-6">127.0.0.1:8080</div>
+            </li>
+            <li class="box">
+                <div class=" c-7">127.0.0.1:8080</div>
+            </li>
+            <li class="box">
+                <div class=" c-8">127.0.0.1:8080</div>
+            </li>
+            <li class="box">
+                <div class=" c-9">127.0.0.1:8080</div>
+            </li>
+            <li class="box">
+                <div class=" c-10">127.0.0.1:8080</div>
+            </li>
+        </ul>
+    </div>
+
+</div>
+<!--<div class="blog-footer" style="display: block">-->
+<!--<small>infra© Copyright <a href="http://www.keruyun.com">客如云</a> <a href="http://tietang.wang">blog</a>-->
+<!--</small>-->
+<!--</div>-->
+
+<div>
+    <div class=" service grid ">
+        <div class=" title c-7">例子2</div>
+        <div class="boxes">
+
+            <div class="box">
+                <div class="c-10 in_box">1M</div>
+                <div class="c-10 in_box">5M</div>
+                <div class="c-10 in_box">15M</div>
+                <div class="host"></a>
+                </div>
+            </div>
+
+            <div class="box">
+                <div class="c-0 in_box"></div>
+                <div class="c-5 in_box"></div>
+                <div class="c-10 in_box"></div>
+                <div class="host">IP
+                </div>
+            </div>
+
+        </div>
+
+
+    </div>
+
+</div>
+<script src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
+<script type="text/javascript" src="/assets/blocksit/blocksit.min.js"></script>
+<script type="text/javascript">
+    var currentWidth = 1200;
+    $(document).ready(function () {
+        var numOfCol = 10
+        //
+        //        $(window).scroll(function () {
+        //            // 当滚动到最底部以上50像素时， 加载新内容
+        //            if ($(document).height() - $(this).scrollTop() - $(this).height() < 50) {
+        //                $('#container').append($("#test").html());
+        //                $('#container').BlocksIt({
+        //                    numOfCol: 6,
+        //                    offsetX: 8,
+        //                    offsetY: 8
+        //                });
+        //                blocksIt(7);
+        //            }
+        //        });
+
+        $(window).resize(function () {
+            blocksIt(-1);
+        });
+
+        blocksIt(7);
+    });
+
+    function blocksIt(num) {
+        if (num == -1) {
+            num = 7;
+        }
+        var winWidth = $(window).width();
+        var col = Math.floor(winWidth / 271);
+        var conWidth = col * 271;
+//        if (conWidth != currentWidth) {
+//        currentWidth = conWidth;
+        $('#container').width(conWidth);
+//        }
+
+        $('#container').BlocksIt({
+            numOfCol: col,
+            offsetX: 8,
+            offsetY: 8,
+            blockElement: '.grid'
+        });
+    }
+</script>
+
+
+</body>
+</html>
