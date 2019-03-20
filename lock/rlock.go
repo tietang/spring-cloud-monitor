@@ -2,9 +2,9 @@ package lock
 
 import (
     "github.com/garyburd/redigo/redis"
+    "github.com/tietang/props/kvs"
     "time"
     "github.com/kataras/go-errors"
-    "github.com/tietang/props"
 )
 
 type RedisConfig struct {
@@ -39,7 +39,7 @@ func (r *RedisConfig) Init() {
 
 }
 
-func NewRedisConfig(conf props.ConfigSource) *RedisConfig {
+func NewRedisConfig(conf kvs.ConfigSource) *RedisConfig {
     config := &RedisConfig{
         Address:     conf.GetDefault("redis.address", "127.0.0.1:6379"),
         Password:    conf.GetDefault("redis.password", ""),

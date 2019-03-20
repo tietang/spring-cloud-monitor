@@ -2,9 +2,9 @@ package collector
 
 import (
     "github.com/tietang/go-eureka-client/eureka"
+    "github.com/tietang/props/kvs"
     "time"
     "strings"
-    "github.com/tietang/props"
     "github.com/rcrowley/go-metrics"
     "net/http"
     "net"
@@ -43,7 +43,7 @@ type Service struct {
     //MicroHealthChecker *MicroHealthChecker `json:"-"`
     discovery *eureka.Discovery  `json:"-"`
     ticker    *time.Ticker       `json:"-"`
-    conf      props.ConfigSource `json:"-"`
+    conf      kvs.ConfigSource `json:"-"`
     //config
     ServiceId string
     //
@@ -70,7 +70,7 @@ type Instance struct {
 
 type HealthChecker struct {
     discovery *eureka.Discovery
-    conf      props.ConfigSource
+    conf      kvs.ConfigSource
     //config
     eurekaUrls     []string
     eurekaInterval time.Duration
@@ -80,7 +80,7 @@ type HealthChecker struct {
     redis *redis.Client
 }
 
-func NewHealthChecker(conf props.ConfigSource) *HealthChecker {
+func NewHealthChecker(conf kvs.ConfigSource) *HealthChecker {
     var redisClient *redis.Client
     if conf.GetBoolDefault(CONF_REDIS_ENABLED, false) {
         redisClient = redis.NewClient(&redis.Options{

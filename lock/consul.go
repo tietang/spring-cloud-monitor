@@ -3,7 +3,7 @@ package lock
 import (
     consulapi "github.com/hashicorp/consul/api"
     "github.com/hashicorp/go-multierror"
-    "github.com/tietang/props"
+    "github.com/tietang/props/kvs"
     "strconv"
 )
 
@@ -24,7 +24,7 @@ func (r *ConsulConfig) Init() {
     }
 }
 
-func NewConsulConfig(conf props.ConfigSource) *ConsulConfig {
+func NewConsulConfig(conf kvs.ConfigSource) *ConsulConfig {
     config := &ConsulConfig{
         Address:   conf.GetDefault("consul.address", "127.0.0.1:6379"),
         TTL:       conf.GetIntDefault("consul.ttl", 0),

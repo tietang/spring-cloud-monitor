@@ -1,7 +1,7 @@
 package collector
 
 import (
-    "github.com/tietang/props"
+    "github.com/tietang/props/kvs"
     "time"
     "math"
     "strconv"
@@ -45,7 +45,7 @@ type Host struct {
 
 type ServiceCollector struct {
     serviceName string
-    conf        props.ConfigSource
+    conf        kvs.ConfigSource
     collector   *Collector
 
     influx *Influx
