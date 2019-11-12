@@ -1,10 +1,10 @@
 
 # spring-cloud-monitor
 
-[![Build Status](https://travis-ci.org/keruyun/spring-cloud-monitor.svg?branch=master)](<https://travis-ci.org/keruyun/spring-cloud-monitor>)
-[![GoDoc Documentation](http://godoc.org/github.com/keruyun/spring-cloud-monitor?status.png)](<https://godoc.org/github.com/keruyun/spring-cloud-monitor>)
-[![Sourcegraph](https://sourcegraph.com/github.com/keruyun/spring-cloud-monitor/-/badge.svg)](https://sourcegraph.com/github.com/keruyun/spring-cloud-monitor?badge)
-[![GitHub release](https://img.shields.io/github/release/keruyun/spring-cloud-monitor.svg)](https://github.com/keruyun/spring-cloud-monitor/releases)
+[![Build Status](https://travis-ci.org/tietang/spring-cloud-monitor.svg?branch=master)](<https://travis-ci.org/tietang/spring-cloud-monitor>)
+[![GoDoc Documentation](http://godoc.org/github.com/tietang/spring-cloud-monitor?status.png)](<https://godoc.org/github.com/tietang/spring-cloud-monitor>)
+[![Sourcegraph](https://sourcegraph.com/github.com/tietang/spring-cloud-monitor/-/badge.svg)](https://sourcegraph.com/github.com/tietang/spring-cloud-monitor?badge)
+[![GitHub release](https://img.shields.io/github/release/tietang/spring-cloud-monitor.svg)](https://github.com/tietang/spring-cloud-monitor/releases)
 
  
 一个基于eureka服务发现对微服务应用JVM和WEB请求指标、微服务运行状态的监控，并通过图形化来展示的小型轻量级监控系统。
